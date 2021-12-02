@@ -62,7 +62,7 @@ npm run dev
 ### 2단계 - 배포하기
 1. TLS가 적용된 URL을 알려주세요
 
-- URL : 
+- URL : https://subway.lewisseo91.p-e.kr/
 
 ### 1단계 체크 리스트
 
@@ -114,3 +114,31 @@ npm run dev
 
 - [x] 외부망에 웹 애플리케이션을 배포 
 - [x] DNS 설정
+
+## 2단계 체크 리스트
+
+### 운영 환경 구성하기
+
+- [x] 웹 애플리케이션 앞단에 Reverse Proxy 구성하기
+  - 외부망에 Nginx로 Reverse Proxy를 구성
+  - Reverse Proxy에 TLS 설정
+- [x] 운영 데이터베이스 구성하기
+
+### 개발 환경 구성하기
+
+- [x] 설정 파일 나누기 
+  - JUnit : h2, Local : docker(mysql), Prod : 운영 DB를 사용하도록 설정
+- [x] 데이터베이스 테이블 스키마 버전 관리 (flyway)
+
+### 겪은 이슈 및 느낀점 정리 (2단계)
+
+- TLS 설정 시 subdomain까지 같이 설정해 줘야 한다.
+  - 예전에 nginx로 다른 곳에서 쓸 때는 mainDomain 이름만 넣고 했던 기억에 너무 의존하여 오랜 시간동안 디버깅 진행
+    - 브라우저 메시지를 좀 더 정확하게 이해할 수 있게 되었다.
+  
+- Flyway의 편리함과 괴랄함을 동시에 느끼게 되었다.
+  - 완전 세팅이 다 되어있을 시, 다음 버전 수정 시 많은 일을 할 필요가 없는 굉장한 툴
+  - 하지만 초보가 세팅 시 syntax error 발생 -> transaction rollback 일어나지 않음 -> v1이 이상한 형태로 그대로 init 됨
+    - 이를 해결하기 위해 flyway repair, sql 내에서 drop, delete 와 같은 행동들을 진행
+    - 이와 같은 일이 실무에서 일어났다면 끔찍했을 것이라 생각
+  - 실전에서 여러 유저가 사용할 때 이런 일이 발생한다면 flyway_schema_history log를 보고 rollback을 하면되지만 어떻게 할까라는 고민을 많이 하게 함.
