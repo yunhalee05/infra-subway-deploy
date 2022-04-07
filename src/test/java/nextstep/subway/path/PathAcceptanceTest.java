@@ -58,16 +58,16 @@ public class PathAcceptanceTest extends AcceptanceTest {
         지하철_노선에_지하철역_등록되어_있음(삼호선, 교대역, 남부터미널역, 3);
     }
 
-    @DisplayName("두 역의 최단 거리 경로를 조회한다.")
-    @Test
-    void findPathByDistance() {
-        //when
-        ExtractableResponse<Response> response = 거리_경로_조회_요청(3L, 2L);
-
-        //then
-        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
-        총_거리와_소요_시간을_함께_응답함(response, 5);
-    }
+//    @DisplayName("두 역의 최단 거리 경로를 조회한다.")
+//    @Test
+//    void findPathByDistance() {
+//        //when
+//        ExtractableResponse<Response> response = 거리_경로_조회_요청(3L, 2L);
+//
+//        //then
+//        적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
+//        총_거리와_소요_시간을_함께_응답함(response, 5);
+//    }
 
     private LineResponse 지하철_노선_등록되어_있음(String name, String color, StationResponse upStation, StationResponse downStation, int distance) {
         Map<String, String> lineCreateParams;
